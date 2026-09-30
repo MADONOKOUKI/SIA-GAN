@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper below."
+title: "SIA-GAN: Scrambling Inversion Attack Using Generative Adversarial Network (code)"
+type: software
+authors:
+  - family-names: Madono
+    given-names: Koki
+    orcid: "https://orcid.org/0000-0002-5214-8539"
+repository-code: "https://github.com/MADONOKOUKI/SIA-GAN"
+url: "https://madonokouki.github.io/projects/siagan/"
+license: MIT
+keywords:
+  - image scrambling
+  - privacy-preserving machine learning
+  - generative adversarial network
+  - inversion attack
+preferred-citation:
+  type: article
+  title: "SIA-GAN: Scrambling Inversion Attack Using Generative Adversarial Network"
+  authors:
+    - family-names: Madono
+      given-names: Koki
+      orcid: "https://orcid.org/0000-0002-5214-8539"
+    - family-names: Tanaka
+      given-names: Masayuki
+    - family-names: Onishi
+      given-names: Masaki
+    - family-names: Ogawa
+      given-names: Tetsuji
+  journal: "IEEE Access"
+  volume: 9
+  start: 129385
+  end: 129393
+  year: 2021
+  doi: "10.1109/ACCESS.2021.3112684"
+  url: "https://doi.org/10.1109/ACCESS.2021.3112684"
