@@ -102,6 +102,11 @@ def load_original_generator(new, orig):
     new.decoder.load_state_dict(dec)
 
 
+def assert_rel_close(a, b, name, rel=1e-3):
+    err = ((a - b).norm() / b.norm().clamp_min(1e-12)).item()
+    assert err < rel, f"{name}: relative error {err:.2e} >= {rel}"
+
+
 def test_generator_matches_the_original():
     from generator import Generator as OriginalGenerator
 
@@ -130,10 +135,11 @@ def test_generator_matches_the_original():
     new.train()
     orig(z, None)[0].square().mean().backward()
     new(z)[0].square().mean().backward()
+    # compared by the relative error of the whole tensor: element-wise tolerances fail on near-zero entries
+    # because float32 summation order differs between platforms (about 5e-6 on macOS; a real mismatch is O(1))
     for b in (0, 17, 63):
-        assert torch.allclose(ad.convs0.weight.grad[b], orig.convs0[b].weight_orig.grad, atol=1e-6, rtol=1e-3)
-    assert torch.allclose(new.decoder.reps[2][0].weight_orig.grad, orig.rep3[0].weight_orig.grad, atol=1e-6,
-                          rtol=1e-3)
+        assert_rel_close(ad.convs0.weight.grad[b], orig.convs0[b].weight_orig.grad, f"block {b} gradient")
+    assert_rel_close(new.decoder.reps[2][0].weight_orig.grad, orig.rep3[0].weight_orig.grad, "decoder gradient")
 
 
 def test_discriminator_matches_the_original():
